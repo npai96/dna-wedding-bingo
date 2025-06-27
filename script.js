@@ -10,9 +10,9 @@ const prompts = [
   "Raunak asks if you've heard of an obscure band",
   "Arjun makes NBA reference",
   "Sriram initiates and instigates an untimely philosophical debate",
-  "Someone doesn't wake up on time for the ceremony",
+  "Someone doesn't wake up on time for the wedding ceremony",
   "Roopam wears all black",
-  "Someone falls asleep during ceremony",
+  "Someone falls asleep during the wedding ceremony",
   "Hoe-Jin does namaste 🙏",
   "DJ plays Mundian Ke Bachke",
   "Mahesh and Nihal switch clothing items",
@@ -24,7 +24,8 @@ const prompts = [
   "Some aunty tries to take over wedding planning",
   "Arjun forgets dance moves on stage",
   "Someone brings up St. Lucia",
-  "Mehar immediately hits it off with HTS clients"
+  "Someone asks who/what 'Dink' is",
+  "Mehar immediately hits it off with HTS clients",
 ];
 
 const board = document.getElementById("bingoBoard");
@@ -40,12 +41,7 @@ function createBoard() {
   for (let i = 0; i < 25; i++) {
     const tile = document.createElement("div");
     tile.className = "bingo-tile";
-    if (i === 12) {
-      tile.textContent = "Free!";
-      tile.classList.add("selected");
-    } else {
-      tile.textContent = shuffled.pop();
-    }
+    tile.textContent = shuffled.pop();
     tile.addEventListener("click", () => {
       tile.classList.toggle("selected");
     });

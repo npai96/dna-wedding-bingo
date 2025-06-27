@@ -1,0 +1,60 @@
+/* style.css */
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background: #fef6f0;
+  color: #333;
+  margin: 0;
+  padding: 1rem;
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background: #ffb347;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.bingo-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.bingo-tile {
+  background: #fff;
+  padding: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.bingo-tile.selected {
+  background: #a5d6a7;
+  transform: scale(1.05);
+  border-color: #4caf50;
+}
+
+@media (max-width: 500px) {
+  .bingo-tile {
+    font-size: 0.75rem;
+    padding: 0.6rem;
+  }
+}

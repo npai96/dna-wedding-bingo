@@ -35,19 +35,62 @@ function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
-function createBoard() {
+function saveState() {
+  const tiles = document.querySelectorAll(".bingo-tile");
+  const boardOrder = [];
+  const selectedTexts = [];
+  
+  tiles.forEach((tile) => {
+    boardOrder.push(tile.textContent);
+    if (tile.classList.contains("selected")) {
+      selectedTexts.push(tile.textContent);
+    }
+  });
+  
+  localStorage.setItem("bingoBoardOrder", JSON.stringify(boardOrder));
+  localStorage.setItem("bingoSelections", JSON.stringify(selectedTexts));
+}
+
+function createBoard(useExistingOrder = false) {
   board.innerHTML = "";
-  const shuffled = shuffle([...prompts]);
-  for (let i = 0; i < 25; i++) {
+  
+  let boardOrder;
+  const savedOrder = localStorage.getItem("bingoBoardOrder");
+  const savedSelections = JSON.parse(localStorage.getItem("bingoSelections") || "[]");
+  
+  if (useExistingOrder && savedOrder) {
+    boardOrder = JSON.parse(savedOrder);
+  } else {
+    const shuffled = shuffle([...prompts]);
+    boardOrder = shuffled.slice(0, 25);
+  }
+  
+  boardOrder.forEach(tileText => {
     const tile = document.createElement("div");
     tile.className = "bingo-tile";
-    tile.textContent = shuffled.pop();
+    tile.textContent = tileText;
+    
+    // Restore selection if this text was previously selected
+    if (savedSelections.includes(tileText)) {
+      tile.classList.add("selected");
+    }
+    
     tile.addEventListener("click", () => {
       tile.classList.toggle("selected");
+      saveState();
     });
     board.appendChild(tile);
+  });
+  
+  // Save the current board order
+  if (!useExistingOrder) {
+    saveState();
   }
 }
 
-shuffleButton.addEventListener("click", createBoard);
-window.onload = createBoard;
+shuffleButton.addEventListener("click", () => {
+  localStorage.removeItem("bingoSelections");
+  localStorage.removeItem("bingoBoardOrder");
+  createBoard(false);
+});
+window.onload = () => createBoard(true);
